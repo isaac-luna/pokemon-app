@@ -1,0 +1,10 @@
+server:
+  port: 8080
+    
+# Configuración personalizada
+# URL base para PokeAPI
+# Ajusta si necesitas un buffer más grande
+skaro:
+  pokeapi:
+    base-uri: https://pokeapi.co/api/v2/
+    max-buffer-size: 565000

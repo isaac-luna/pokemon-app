@@ -1,0 +1,3 @@
+org.springframework.boot.diagnostics.FailureAnalyzer=\
+com.bankaya.pokemon.analyzer.BeanCreationFailureAnalyzer,\
+com.bankaya.pokemon.analyzer.WebClientFailureAnalyzer

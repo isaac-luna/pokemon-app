@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://bankaya.com/pokemon/xsd"
+	targetNamespace="http://bankaya.com/pokemon/xsd"
+	elementFormDefault="qualified">
+
+	<xs:element name="getPokemonDetailsRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="nameOrId" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getPokemonDetailsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pokemon" type="tns:Pokemon" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getPokemonAbilitiesRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="nameOrId" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getPokemonAbilitiesResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="abilities" type="tns:PokemonAbility"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getPokemonHeldItemsRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="nameOrId" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getPokemonHeldItemsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="heldItems" type="tns:PokemonHeldItem"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- This abstract type can hold the 'id' and 'name' fields that you have 
+		in the PokeApiResource interface. We mark it as abstract="true" so it isn't 
+		used directly. -->
+	<xs:complexType name="PokeApiResourceBase"
+		abstract="true">
+		<xs:sequence>
+			<xs:element name="id" type="xs:int" minOccurs="0" />
+			<xs:element name="name" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Extends PokeApiResourceBase so we inherit 'id' and 'name'. You can 
+		omit the inheritance if you don't need it. -->
+	<xs:complexType name="Pokemon">
+		<xs:complexContent>
+			<xs:extension base="tns:PokeApiResourceBase">
+				<xs:sequence>
+					<!-- This maps List<PokemonAbility> abilities -->
+					<xs:element name="abilities" type="tns:PokemonAbility"
+						minOccurs="0" maxOccurs="unbounded" />
+
+					<!-- baseExperience -->
+					<xs:element name="baseExperience" type="xs:int"
+						minOccurs="0" />
+
+					<!-- List<PokemonHeldItem> heldItems -->
+					<xs:element name="heldItems" type="tns:PokemonHeldItem"
+						minOccurs="0" maxOccurs="unbounded" />
+
+					<!-- locationAreaEncounters -->
+					<xs:element name="locationAreaEncounters"
+						type="xs:string" minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="PokemonAbility">
+		<xs:sequence>
+			<!-- isHidden -->
+			<xs:element name="isHidden" type="xs:boolean"
+				minOccurs="0" />
+			<!-- slot -->
+			<xs:element name="slot" type="xs:int" minOccurs="0" />
+			<!-- ability = NamedApiResource<?> -->
+			<xs:element name="ability" type="tns:NamedApiResource"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- In Java, this is a generic (NamedApiResource<T extends PokeApiResource>). 
+		In XSD, we just define a concrete type for name/url. -->
+	<xs:complexType name="NamedApiResource">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" />
+			<xs:element name="url" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="PokemonHeldItem">
+		<xs:sequence>
+			<!-- item = NamedApiResource<?> -->
+			<xs:element name="item" type="tns:NamedApiResource"
+				minOccurs="0" />
+			<!-- versionDetails = List<PokemonHeldItemVersion> -->
+			<xs:element name="versionDetails"
+				type="tns:PokemonHeldItemVersion" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="PokemonHeldItemVersion">
+		<xs:sequence>
+			<!-- version = NamedApiResource<?> -->
+			<xs:element name="version" type="tns:NamedApiResource"
+				minOccurs="0" />
+			<!-- rarity -->
+			<xs:element name="rarity" type="xs:int" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>
