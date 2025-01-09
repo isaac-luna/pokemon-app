@@ -63,5 +63,77 @@ The Pokémon API application is a Spring Boot-based application that interacts w
 
 ### **Clone the Repository**
 ```bash
-git clone https://github.com/your-repository/pokemon-app.git
+git clone https://github.com/isaac-luna/pokemon-app.git
 cd pokemon-app
+```
+
+
+
+### **Usage**
+
+**Run the Application**
+
+ To start the application, use:
+
+```bash
+mvn spring-boot:run
+```
+
+The application will run on http://localhost:8080.
+
+
+**REST Endpoints**
+
+| Endpoint                                           | Method | Description                              |
+|----------------------------------------------------|--------|------------------------------------------|
+| `/api/v1/pokemon/{nameOrId}`               | GET    | Fetch Pokémon details.                   |
+| `/api/v1/pokemon/{nameOrId}/abilities`  | GET    | Retrieve Pokémon abilities.              |
+| `/api/v1/pokemon/{nameOrId}/held-items` | GET    | Get held items for a Pokémon.            |
+
+
+**SOAP Endpoints**
+
+| Operation                         | Description                              |
+|-----------------------------------|------------------------------------------|
+| `getPokemonDetails`               | Fetch Pokémon details via SOAP.         |
+| `getPokemonAbilities`             | Retrieve Pokémon abilities via SOAP.    |
+| `getPokemonHeldItems`             | Get held items via SOAP.                |
+
+
+SOAP WSDL is available at:
+
+http://localhost:8080/ws/pokemon.wsdl
+
+##Interactive API Documentation
+
+Swagger UI is available at:
+
+http://localhost:8080/swagger-ui.html
+
+##Development
+
+**Project Structure**
+
+```plaintext
+src/main/java:
+    com.bankaya.pokemon.controller: REST controllers.
+    com.bankaya.pokemon.adapter: Service adapters for REST and SOAP integration.
+    com.bankaya.pokemon.service: Core business logic.
+    com.bankaya.pokemon.dto: Data transfer objects (DTOs).
+    com.bankaya.pokemon.fixture: Test data fixtures.
+
+src/main/resources:
+    application.properties: Configuration properties.
+    pokemon.xsd: Schema definition for SOAP services.
+
+src/test/java:
+    Unit and integration tests.
+```
+
+**Generate JAXB Classes**
+
+The pokemon.xsd schema is used to generate Java classes. Run the following command to regenerate the classes:
+
+```bash
+mvn jaxb2:xjc
+```
