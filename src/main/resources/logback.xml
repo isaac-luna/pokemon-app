@@ -28,13 +28,13 @@
     </appender>
 
     <!-- Root Logger -->
-    <root level="trace">
+    <root level="info">
         <appender-ref ref="Console" />
         <appender-ref ref="RollingFile" />
     </root>
 
     <!-- Specific Logger for com.bankaya at TRACE level -->
-    <logger name="com.bankaya" level="trace">
+    <logger name="com.bankaya" level="info">
         <appender-ref ref="Console" />
         <appender-ref ref="RollingFile" />
     </logger>
